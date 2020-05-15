@@ -45,48 +45,33 @@
         var items     = [];
 
         form.addEventListener("submit", event => {
-
-            event.preventDefault();
-            
+            event.preventDefault();            
             let valueInput = form.elements[0].value;
-
             items.push(valueInput);
-
             form.reset();
-
             viewItem();
         });
 
         const viewItem = () => {
-
             areaItems.innerHTML = '';
-
             let titleItem = document.querySelector("#titleItens").style.display = "block";
-
+            
             items.forEach(value => {
-
-                let li = document.createElement('li');
-                
-                li.className = "deleteItem";
-                
+                let li = document.createElement('li');                
+                li.className = "deleteItem";                
                 li.innerHTML = `${value} | [X]`;
-
                 addEvent(li);
-
                 areaItems.append(li);
             });
         };
 
-        const addEvent = (li) => {
-            
+        const addEvent = (li) => {            
             li.addEventListener("click", () => removeItem(li));
         }
 
         const removeItem = (li) => {
             let index = items.indexOf(li.textContent.replace(' | [X]', ''));
-
             if(index > -1) items.splice(index, 1);
-
             areaItems.removeChild(li);
         }
 
