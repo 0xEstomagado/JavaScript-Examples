@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head lang="pt-br">
+        <title>.::Minha lista minha vida::.</title>
+        <link rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous">
+        <style>
+            .deleteItem {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+
+            <div class="row">
+                <div class="items">
+                    <h3 style="display: none;" id="titleItens" >Itens:</h3>
+                    <ul id="list"></ul>
+                </div>
+            </div>
+       
+            <div class="row">
+                <form id="form">
+                    <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <h3>Item da Lista:</h3>
+                        <input type="item" class="form-control" id="inputItem" autofocus="true" placeholder="Digite o item">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <button class="btn btn-primary">Enviar</button>
+                    </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    <script>
+
+        let form      = document.querySelector("#form");
+        let areaItems = document.querySelector("#list");
+        var items     = [];
+
+        form.addEventListener("submit", event => {
+
+            event.preventDefault();
+            
+            let valueInput = form.elements[0].value;
+
+            items.push(valueInput);
+
+            form.reset();
+
+            viewItem();
+        });
+
+        const viewItem = () => {
+
+            areaItems.innerHTML = '';
+
+            let titleItem = document.querySelector("#titleItens").style.display = "block";
+
+            items.forEach(value => {
+
+                let li = document.createElement('li');
+                
+                li.className = "deleteItem";
+                
+                li.innerHTML = `${value} | [X]`;
+
+                addEvent(li);
+
+                areaItems.append(li);
+            });
+        };
+
+        const addEvent = (li) => {
+            
+            li.addEventListener("click", () => removeItem(li));
+        }
+
+        const removeItem = (li) => {
+            let index = items.indexOf(li.textContent.replace(' | [X]', ''));
+
+            if(index > -1) items.splice(index, 1);
+
+            areaItems.removeChild(li);
+        }
+
+    </script>
+    </body>
+</html>
